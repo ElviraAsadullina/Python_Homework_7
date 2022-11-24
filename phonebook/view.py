@@ -1,6 +1,3 @@
-from gb_groupwork.phonebook.views import *
-import os
-
 
 def showMenu():
     print('\nГлавное меню:\n'

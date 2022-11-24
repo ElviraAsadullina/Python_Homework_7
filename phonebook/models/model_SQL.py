@@ -1,7 +1,4 @@
-import json
 
-from sqlalchemy.dialects.sqlite import insert
-from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy import Column, Integer, String, Date, Table, select
 import sqlalchemy as db
 from sqlalchemy.ext.declarative import declarative_base
@@ -9,17 +6,13 @@ from sqlalchemy.orm import sessionmaker
 import sqlite3
 import csv
 import os
-from gb_groupwork.phonebook import views
 from gb_groupwork.phonebook import view
 from gb_groupwork.phonebook.controller import DB_PATH, DB_SQL_NAME, DB_SQL_PATH_FULL, ExportDB_SqlitetoTxt_PATH_FULL, ExpoptDB_SqlitetoCSV_PATH_FULL
-from gb_groupwork.phonebook.controllers import controller_cli
+
 
 
 class SQL_model:
     def __init__(self):
-        # DB_NAME = 'sqlite'
-        # DB_PATH = '../../gb_groupwork/phonebook/DATA/'
-        # self.DB_SQL_PATH_FULL = DB_PATH + DB_SQL_NAME + '.sqlite'
         self.DB_SQL_PATH_FULL = DB_SQL_PATH_FULL
         self.ExportDB_SqlitetoTxt_PATH_FULL = ExportDB_SqlitetoTxt_PATH_FULL
         self.ExpoptDB_SqlitetoCSV_PATH_FULL = ExpoptDB_SqlitetoCSV_PATH_FULL
@@ -30,13 +23,6 @@ class SQL_model:
         self.session = Session()
         self.metadata = db.MetaData()
     def set_SQL_CreateDB(self):
-
-        # GROUP_CHOICES = (
-        #         ('БЕЗ ГРУППЫ', 'БЕЗ ГРУППЫ'),
-        #         ('Семья', 'Семья'),
-        #         ('Работа', 'Работа'),
-        #         ('Друзья', 'Друзья'),
-        #     ),
 
         self.table_phonebook = Table(
             'PhoneBook', self.metadata,
@@ -75,7 +61,6 @@ class SQL_model:
         phone_person = Column(String(12), nullable=False)
         phone_work = Column(String(12), nullable=True)
         email = Column(String, nullable=True)
-        # group = Column(String, choise=GROUP_CHOICES, default='БЕЗ ГРУППЫ', nullable=True)
         group = Column(String, nullable=True)
         city = Column(String, nullable=True)
 
@@ -119,45 +104,6 @@ class SQL_model:
         for result in responses:
             view.showInfo('white', f'{result}')
 
-
-    def get_FoundContactBy_id(self):
-        field = view.inputInt('Введите ID контакта: ')
-        responses = self.session.query(self.PhoneBook).filter(self.PhoneBook.id == field).all()
-        if responses == []:
-            view.inputStr(f'Контакт с ID "{field}" не найден')
-        else:
-            for result in responses:
-                view.showInfo('white', f'{result}')
-
-    def get_FoundContactBy_first_name(self):
-        field = view.inputStr('Введите имя контакта: ').title()
-        responses = self.session.query(self.PhoneBook).filter(self.PhoneBook.first_name == field).all()
-        if responses == []:
-            view.inputStr(f'Контакт с именем "{field}" не найден')
-        else:
-            for result in responses:
-                view.showInfo('white', f'{result}')
-
-
-    def get_FoundContactBy_last_name(self):
-        field = view.inputStr('Введите фамилию контакта: ').upper()
-        responses = self.session.query(self.PhoneBook).filter(self.PhoneBook.last_name == field).all()
-        if responses == []:
-            view.inputStr(f'Контакт с фамилией "{field}" не найден')
-        else:
-            for result in responses:
-                view.showInfo('white', f'{result}')
-
-
-    def get_FoundContactBy_phone_person(self):
-        field = view.inputStr('Введите номер телефона: ')
-        responses = self.session.query(self.PhoneBook).filter(self.PhoneBook.phone_person == field).all()
-        if responses == []:
-            view.inputStr(f'Контакт с таким номером "{field}" не найден')
-        else:
-            for result in responses:
-                view.showInfo('white', f'{result}')
-
     def get_FoundContact(self):
         field = view.inputStr('Введите ключевое слово для поиска контакта: ')
         view.showInfo('white', 'НАЙДЕНЫ КОНТАКТЫ: ')
@@ -180,83 +126,6 @@ class SQL_model:
     def set_NewContact(self):
         view.showInfo('invert', '\nрежим добавления нового контакта\n\n'.upper())
         view.bamper()
-        # get_first_name = view.inputStr('Введите имя контакта: ')
-        # get_last_name = view.inputStr('Введите фамилию контакта: ')
-        # get_patronymic = view.inputStr('Введите отчество контакта: ')
-        # get_birthday = view.inputStr('Введите дату ДР контакта: ')
-        # get_phone_person = view.inputStr('Введите мобильный телефон контакта: ')
-        # get_phone_work = view.inputStr('Введите рабочий телефон контакта: ')
-        # get_email = view.inputStr('Введите email контакта: ')
-        # get_group = view.inputStr('Введите группу контакта: ')
-        # get_city = view.inputStr('Введите город контакта: ')
-
-        # with self.engine.connect() as conn:
-        #     result = conn.execute(insert(self.table_phonebook),
-        #         [
-        #             {
-        #                 'first_name': get_first_name,
-        #                 'last_name': get_last_name,
-        #                 'patronymic': get_patronymic,
-        #                 'birthday': get_birthday,
-        #                 'phone_person': get_phone_person,
-        #                 'phone_work': get_phone_work,
-        #                 'email': get_email,
-        #                 'group': get_group,
-        #                 'city': get_city,
-        #             },
-        #         ],
-        #     )
-        #     conn.commit()
-
-        # self.connection.execute(self.PhoneBook.insert(),
-        #     [
-        #        {
-        #          'first_name': get_first_name,
-        #          'last_name': get_last_name,
-        #          'patronymic': get_patronymic,
-        #          'birthday': get_birthday,
-        #          'phone_person': get_phone_person,
-        #          'phone_work': get_phone_work,
-        #          'email': get_email,
-        #          'group': get_group,
-        #          'city': get_city,
-        #         },
-        #     ]
-        # )
-
-        # with self.engine.connect() as conn:
-        #     ins = self.table_phonebook.insert().values(
-        #         first_name=get_first_name,
-        #         last_name=get_last_name,
-        #         patronymic=get_patronymic,
-        #         birthday=get_birthday,
-        #         phone_person=get_phone_person,
-        #         phone_work=get_phone_work,
-        #         email=get_email,
-        #         group=get_group,
-        #         city=get_city,
-        #     )
-
-            # result = conn.execute(ins)
-
-            # result = conn.execute(
-            #     self.insert(self.table_phonebook),
-            #     [
-            #         {'first_name': get_first_name,
-            #          'last_name': get_last_name,
-            #          'patronymic': get_patronymic,
-            #          'birthday': get_birthday,
-            #          'phone_person': get_phone_person,
-            #          'phone_work': get_phone_work,
-            #          'email': get_email,
-            #          'group': get_group,
-            #          'city': get_city,
-            #          },
-            #     ],
-            # )
-            # # result.commit()
-            # self.connection.close()
-
 
     def get_ShowContactBy_id(self):
         field = view.inputStr('Введите ID контакта: ')
@@ -269,15 +138,13 @@ class SQL_model:
 
 
     def get_DeleteContact(self):
-        # self.show_PhoneBook_all()
+        self.show_PhoneBook_all()
         view.showInfo('РЕЖИМ УДАЛЕНИЯ КОНТАКТА')
         field = view.inputStr('Введите ID контакта для удаления: ')
         responses = self.session.query(self.PhoneBook).filter(self.PhoneBook.id == field).all()
         print(f'>>>>{responses[0]}<<<<')
         if responses == []:
             view.showInfo(f'Контакт с ID "{field}" не найден')
-            # self.connection.close()
-            # self.get_DeleteContact()
         elif responses != []:
             for result in responses:
                 view.showInfo('white', f'{result.first_name}')
@@ -290,7 +157,7 @@ class SQL_model:
                 else:
                     view.showInfo('blue', f'Вы отменили удаление контакта с ID "{field}"')
 
-                # self.connection.close()
+
     def Export_SQLtoCSV(self):
         conn = sqlite3.connect(self.DB_SQL_PATH_FULL)
         cursor = conn.cursor()
@@ -315,52 +182,3 @@ class SQL_model:
 
     def setImport_CSV_toSQL(self):
         pass
-
-    # input('Enter для выхода')
-
-    # with engine.connect() as conn:
-    #     result = conn.execute(
-    #         insert(table_phonebook),
-    #         [
-    #             {'first_name': 'Именной',
-    #              'last_name': 'Фимилиев',
-    #              'patronymic': 'Отчество',
-    #              # 'birthday': '22.11.1999',
-    #              'phone_person': '123456789',
-    #              'phone_work': '0987654321',
-    #              'email': 'mail@email.em',
-    #              # 'group': 'Группа',
-    #              'city': 'Славный город',
-    #              },
-    #             {'first_name': 'Иван',
-    #              'last_name': 'Иванов',
-    #              'patronymic': 'Иванович',
-    #              # 'birthday': '21-10-1949',
-    #              'phone_person': '1465456789',
-    #              'phone_work': '0987457321',
-    #              'email': 'mail@mail.em',
-    #              # 'group': 'Группа 2',
-    #              'city': 'Южный',
-    #              },
-    #             {'first_name': 'Пётр',
-    #              'last_name': 'Петров',
-    #              'patronymic': 'Петрович',
-    #              # 'birthday': '1929.12.01',
-    #              'phone_person': '1798745349',
-    #              'phone_work': '7790797834',
-    #              'email': 'mail@email.org',
-    #              # 'group': 'Группа 2',
-    #              'city': 'Северный',
-    #              },
-    #         ],
-    #     )
-    #     connection.close()
-
-
-    # stmt = insert(table_phonebook).values(first_name="Именной", last_name="Фимилиев", phone_person='123456789')
-    # with engine.connect() as conn:
-    #     result = connection.execute(stmt)
-    #     connection.close()
-    #
-    # compiled = stmt.compile()
-    # compiled.params()

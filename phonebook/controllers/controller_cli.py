@@ -159,34 +159,3 @@ class CLI_PhoneBook:
             self.menuSelectExportDbType()
         elif choice == 3:
             self.menuSelectExportDbType()
-
-
-
-
-    # def menu_edit_field(self):
-    #     view.showinfo('КАКОЕ ПОЛЕ ИЗМЕНИТЬ В КОНТАКТЕ?\n')
-    #     view.showinfo(f'Выберите действие:\n'
-    #                   f'1 - Имя\n'
-    #                   f'2 - Фамилия\n'
-    #                   f'3 - Отчество\n'
-    #                   f'4 - Дату рождения\n'
-    #                   f'5 - Номер мобильного телефона\n'
-    #                   f'6 - Номер рабочего телефона\n'
-    #                   f'7 - Электронную почту\n'
-    #                   f'8 - Группу контакта\n'
-    #                   f'9 - Город\n'
-    #                   f'0 - ВЕРНУТЬСЯ НАЗАД\n')
-    #
-    # def menu_export(self):
-    #     view.showinfo(f'Выберите действие:\n'
-    #                   f'1 - в SCV\n'
-    #                   f'2 - в JSON\n'
-    #                   f'3 - в SQLite\n'
-    #                   f'0 - ВЕРНУТЬСЯ НАЗАД\n')
-
-
-# cli = CLI_PhoneBook
-# # cli.test()
-# cli.menuSelectDbType()
-# cli.SelectDbType()
-# cli.menuSelectAction

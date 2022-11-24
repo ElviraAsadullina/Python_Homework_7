@@ -93,20 +93,6 @@ class CSV_model:
             writer.writerows(rows)
 
 
-
-    # def get_DeleteContact(self):
-    #     self.show_PhoneBook_all()
-    #     view.inputStr('РЕЖИМ УДАЛЕНИЯ КОНТАКТА')
-    #     field = view.inputStr('Введите ID контакта для удаления: ')
-    #     with open(self.DB_CSV_PATH_FULL, 'r+', encoding='UTF8', newline='') as in_file:
-    #         reader = csv.reader(in_file)
-    #         rows = [row for row in csv.reader(in_file) if field not in row]
-    #         in_file.seek(0)
-    #         in_file.truncate()
-    #         writer = csv.writer(in_file)
-    #         writer.writerows(rows)
-    #         view.showInfo('green', f'Выбранный контакт с ID "{field}" удалён!')
-
     def set_WriteFile(self, fields):
         with open(self.DB_CSV_PATH_FULL, 'a', encoding='UTF8', newline='') as f:
             writer = csv.writer(f)
