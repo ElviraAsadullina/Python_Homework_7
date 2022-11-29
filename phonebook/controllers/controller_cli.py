@@ -108,29 +108,33 @@ class CLI_PhoneBook:
         elif choice == 0:
             self.menuSelectAction()
 
+
     def menuEditGroupField(self):
         actionMenu = {
             1: 'Семья',
             2: 'Друзья',
             3: 'Работа',
-            4: 'Другие',
-            0: 'ВЕРНУТЬСЯ НАЗАД',
+            4: 'Другие'
         }
         action = {
-            1: view.bamper,
-            2: view.bamper,
-            3: view.bamper,
-            4: view.bamper,
-            0: view.bamper,
+            1: self.getObj(actionMenu, 1),
+            2: self.getObj(actionMenu, 2),
+            3: self.getObj(actionMenu, 3),
+            4: self.getObj(actionMenu, 4),
         }
         view.showInfo('invert', '\nВыберите группу для контакта:\n\n'.upper())
         self.getPrintDict(actionMenu)
         choice = view.inputInt('Выберите пункт меню: ')
         run = action.get(choice)
         if run:
-            run()
+            view.showInfo('white', f'Выбрана группа "{run}"')
+            return run
         else:
             view.showInfo('red', f'Вы сделали не допустимый выбор {choice}. Попробуйте снова!')
+
+    def getObj(self, mydict, key):
+         return mydict[key]
+
 
     def menuSelectExportDbType(self):
         actionMenu = {
