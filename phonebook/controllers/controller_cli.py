@@ -3,7 +3,7 @@ from gb_groupwork.phonebook import view
 from gb_groupwork.phonebook import controller
 from gb_groupwork.phonebook.models import model_CSV as CSV
 from gb_groupwork.phonebook.models import model_SQL as SQL
-import time
+
 
 
 class CLI_PhoneBook:
