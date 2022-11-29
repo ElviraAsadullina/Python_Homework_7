@@ -3,6 +3,8 @@ from gb_groupwork.phonebook import view
 from gb_groupwork.phonebook import controller
 from gb_groupwork.phonebook.models import model_CSV as CSV
 from gb_groupwork.phonebook.models import model_SQL as SQL
+import time
+
 
 class CLI_PhoneBook:
     def __init__(self):
@@ -131,6 +133,15 @@ class CLI_PhoneBook:
             return run
         else:
             view.showInfo('red', f'Вы сделали не допустимый выбор {choice}. Попробуйте снова!')
+        if choice == 1:
+            time.sleep(3)
+        elif choice == 2:
+            time.sleep(3)
+        elif choice == 3:
+            time.sleep(3)
+        elif choice == 4:
+            time.sleep(3)
+
 
     def getObj(self, mydict, key):
          return mydict[key]
